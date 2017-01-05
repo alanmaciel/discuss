@@ -7,6 +7,7 @@ defmodule Discuss.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Discuss.Plugs.SetUser
   end
 
   pipeline :api do
@@ -28,10 +29,11 @@ defmodule Discuss.Router do
   scope "/auth", Discuss do
     pipe_through :browser
 
+    get "/signout", AuthController, :signout
     # Routes added using :provider to work (right now only with github):
     # "/auth/github"
     # "/auth/githu/callback"
-
+ 
     # Initially to authenticate with github
     get "/:provider", AuthController, :request
     # The route where the user is sent back from github itself
