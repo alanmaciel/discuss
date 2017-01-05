@@ -16,13 +16,26 @@ defmodule Discuss.Router do
   scope "/", Discuss do
     pipe_through :browser # Use the default browser stack
 
-    get "/", TopicController, :index
+    # get "/", TopicController, :index
     # get "/topics/new", TopicController, :new
     # post "/topics", TopicController, :create
     # get "/topics/:id/edit", TopicController, :edit
     # put "topics/:id", TopicController, :update
     # delete "/topics/:id", TopicController, :delete
-    resources "/topics", TopicController
+    resources "/", TopicController
+  end
+
+  scope "/auth", Discuss do
+    pipe_through :browser
+
+    # Routes added using :provider to work (right now only with github):
+    # "/auth/github"
+    # "/auth/githu/callback"
+
+    # Initially to authenticate with github
+    get "/:provider", AuthController, :request
+    # The route where the user is sent back from github itself
+    get "/:provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.

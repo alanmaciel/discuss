@@ -41,7 +41,7 @@ defmodule Discuss.TopicController do
     # changeset = Repo.get(Topic, topic_id) |> Topic.changeset(topic)
 
     case Repo.update(changeset) do
-      {:ok, topic} ->
+      {:ok, _topic} ->
         conn
         |> put_flash(:info, "Topic Updated")
         |> redirect(to: topic_path(conn, :index))
